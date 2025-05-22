@@ -7,5 +7,7 @@ export default defineConfig({
   base: '/my-website/',
   build: {
     outDir: 'docs',
+    assetsDir: 'assets',
+    copyPublicDir: true,
   },
 });

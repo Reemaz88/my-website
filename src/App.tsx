@@ -1,12 +1,39 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import './App.css';
+import profilePic from './assets/profile-pic.svg';
+import project1Image from './assets/project1.svg';
+import project2Image from './assets/project2.svg';
 
 function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState('about');
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
+
+  const handleScroll = () => {
+    const sections = document.querySelectorAll('section');
+    const scrollPosition = window.scrollY + 100;
+
+    sections.forEach((section) => {
+      const sectionTop = section.offsetTop;
+      const sectionHeight = section.offsetHeight;
+      const sectionId = section.getAttribute('id') || '';
+
+      if (
+        scrollPosition >= sectionTop &&
+        scrollPosition < sectionTop + sectionHeight
+      ) {
+        setActiveSection(sectionId);
+      }
+    });
+  };
+
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   return (
     <div className='app'>
@@ -29,19 +56,49 @@ function App() {
           </button>
           <ul className={`nav-links ${isMenuOpen ? 'open' : ''}`}>
             <li>
-              <a href='#about'>About</a>
+              <a
+                href='#about'
+                className={activeSection === 'about' ? 'active' : ''}
+                onClick={() => setActiveSection('about')}
+              >
+                About
+              </a>
             </li>
             <li>
-              <a href='#experience'>Experience</a>
+              <a
+                href='#experience'
+                className={activeSection === 'experience' ? 'active' : ''}
+                onClick={() => setActiveSection('experience')}
+              >
+                Experience
+              </a>
             </li>
             <li>
-              <a href='#skills'>Skills</a>
+              <a
+                href='#skills'
+                className={activeSection === 'skills' ? 'active' : ''}
+                onClick={() => setActiveSection('skills')}
+              >
+                Skills
+              </a>
             </li>
             <li>
-              <a href='#education'>Education</a>
+              <a
+                href='#education'
+                className={activeSection === 'education' ? 'active' : ''}
+                onClick={() => setActiveSection('education')}
+              >
+                Education
+              </a>
             </li>
             <li>
-              <a href='#contact'>Contact</a>
+              <a
+                href='#contact'
+                className={activeSection === 'contact' ? 'active' : ''}
+                onClick={() => setActiveSection('contact')}
+              >
+                Contact
+              </a>
             </li>
           </ul>
         </nav>
@@ -50,22 +107,65 @@ function App() {
       <main>
         <section id='about' className='section'>
           <div className='container'>
-            <h1>Reemaz Al-Soufe</h1>
-            <h2>Frontend Developer | CS50 Graduate | React Specialist</h2>
-            <p className='location'>Dubai, United Arab Emirates</p>
+            <div className='profile-header'>
+              <img
+                src={profilePic}
+                alt='Reemaz Al-Soufe'
+                className='profile-picture'
+              />
+              <div className='profile-info'>
+                <h1>Reemaz Al-Soufe</h1>
+                <h2>Frontend Developer | CS50 Graduate | React Specialist</h2>
+                <p className='location'>Dubai, United Arab Emirates</p>
+                <div className='profile-links'>
+                  <a
+                    href='https://github.com/yourusername'
+                    target='_blank'
+                    rel='noopener noreferrer'
+                  >
+                    <i className='fab fa-github'></i> GitHub
+                  </a>
+                  <a
+                    href='https://linkedin.com/in/reemaz-alsoufe'
+                    target='_blank'
+                    rel='noopener noreferrer'
+                  >
+                    <i className='fab fa-linkedin'></i> LinkedIn
+                  </a>
+                  <a href='mailto:reemazalsoufe@gmail.com'>
+                    <i className='fas fa-envelope'></i> Email
+                  </a>
+                </div>
+              </div>
+            </div>
             <div className='summary'>
+              <h3>Professional Summary</h3>
               <p>
-                • Crafting beautiful web interfaces with #ReactJS, #HTML5, and
-                #CSS3
+                Dynamic Frontend Developer with a strong foundation in React.js
+                and modern web technologies. Passionate about creating
+                responsive, user-friendly interfaces and delivering exceptional
+                user experiences. CS50 certified with a background in business
+                and accounting, bringing a unique perspective to web
+                development.
               </p>
-              <p>
-                • Freelance Frontend Developer | CS50 Certified - Computer
-                Science Program from Harvard University
-              </p>
-              <p>• Mastering #JavaScript, #ReactJS, #Figma</p>
-              <p>• Passionate about #UXUI and pixel-perfect design</p>
-              <p>• Skills: #ReactJS #HTML5 #CSS5 #APIs #JavaScript</p>
-              <p>• Let's collaborate on innovative web projects!</p>
+              <div className='key-highlights'>
+                <div className='highlight-item'>
+                  <i className='fas fa-code'></i>
+                  <span>3+ years of frontend development experience</span>
+                </div>
+                <div className='highlight-item'>
+                  <i className='fas fa-mobile-alt'></i>
+                  <span>Expert in responsive web design</span>
+                </div>
+                <div className='highlight-item'>
+                  <i className='fas fa-paint-brush'></i>
+                  <span>Strong UI/UX design skills</span>
+                </div>
+                <div className='highlight-item'>
+                  <i className='fas fa-language'></i>
+                  <span>Bilingual (English & Arabic)</span>
+                </div>
+              </div>
             </div>
           </div>
         </section>
@@ -149,32 +249,129 @@ function App() {
 
         <section id='skills' className='section'>
           <div className='container'>
-            <h2>Skills</h2>
+            <h2>Technical Skills</h2>
             <div className='skills-grid'>
               <div className='skill-card'>
-                <h3>Top Skills</h3>
-                <ul>
-                  <li>Responsive Web Design</li>
-                  <li>Node.js</li>
-                  <li>User Interface Design</li>
-                </ul>
+                <h3>Frontend Development</h3>
+                <div className='skill-progress'>
+                  <div className='skill-item'>
+                    <span>React.js</span>
+                    <div className='progress-bar'>
+                      <div className='progress' style={{ width: '90%' }}></div>
+                    </div>
+                  </div>
+                  <div className='skill-item'>
+                    <span>TypeScript</span>
+                    <div className='progress-bar'>
+                      <div className='progress' style={{ width: '85%' }}></div>
+                    </div>
+                  </div>
+                  <div className='skill-item'>
+                    <span>HTML5/CSS3</span>
+                    <div className='progress-bar'>
+                      <div className='progress' style={{ width: '95%' }}></div>
+                    </div>
+                  </div>
+                  <div className='skill-item'>
+                    <span>JavaScript</span>
+                    <div className='progress-bar'>
+                      <div className='progress' style={{ width: '90%' }}></div>
+                    </div>
+                  </div>
+                </div>
               </div>
+
               <div className='skill-card'>
-                <h3>Languages</h3>
-                <ul>
-                  <li>English (Professional Working)</li>
-                  <li>Arabic (Native or Bilingual)</li>
-                </ul>
+                <h3>Tools & Technologies</h3>
+                <div className='skill-progress'>
+                  <div className='skill-item'>
+                    <span>Git/GitHub</span>
+                    <div className='progress-bar'>
+                      <div className='progress' style={{ width: '85%' }}></div>
+                    </div>
+                  </div>
+                  <div className='skill-item'>
+                    <span>Figma</span>
+                    <div className='progress-bar'>
+                      <div className='progress' style={{ width: '80%' }}></div>
+                    </div>
+                  </div>
+                  <div className='skill-item'>
+                    <span>Responsive Design</span>
+                    <div className='progress-bar'>
+                      <div className='progress' style={{ width: '95%' }}></div>
+                    </div>
+                  </div>
+                  <div className='skill-item'>
+                    <span>UI/UX Design</span>
+                    <div className='progress-bar'>
+                      <div className='progress' style={{ width: '85%' }}></div>
+                    </div>
+                  </div>
+                </div>
               </div>
-              <div className='skill-card'>
-                <h3>Certifications</h3>
-                <ul>
-                  <li>Learning Git and GitHub</li>
-                  <li>Figma: From Design to CSS</li>
-                  <li>The Complete 2023 Web Development Bootcamp</li>
-                  <li>Explore a Career in Front-End Web Development</li>
-                  <li>Understanding HTML and CSS</li>
-                </ul>
+            </div>
+          </div>
+        </section>
+
+        <section id='projects' className='section'>
+          <div className='container'>
+            <h2>Featured Projects</h2>
+            <div className='projects-grid'>
+              <div className='project-card'>
+                <div className='project-image'>
+                  <img src={project1Image} alt='E-Commerce Platform' />
+                  <div className='project-links'>
+                    <a href='#' target='_blank' rel='noopener noreferrer'>
+                      <i className='fas fa-external-link-alt'></i>
+                    </a>
+                    <a href='#' target='_blank' rel='noopener noreferrer'>
+                      <i className='fab fa-github'></i>
+                    </a>
+                  </div>
+                </div>
+                <div className='project-info'>
+                  <h3>E-Commerce Platform</h3>
+                  <p>
+                    A full-featured e-commerce platform built with React and
+                    TypeScript, featuring real-time inventory management and
+                    secure payment processing.
+                  </p>
+                  <div className='project-tech'>
+                    <span>React</span>
+                    <span>TypeScript</span>
+                    <span>Node.js</span>
+                    <span>MongoDB</span>
+                  </div>
+                </div>
+              </div>
+
+              <div className='project-card'>
+                <div className='project-image'>
+                  <img src={project2Image} alt='Task Management App' />
+                  <div className='project-links'>
+                    <a href='#' target='_blank' rel='noopener noreferrer'>
+                      <i className='fas fa-external-link-alt'></i>
+                    </a>
+                    <a href='#' target='_blank' rel='noopener noreferrer'>
+                      <i className='fab fa-github'></i>
+                    </a>
+                  </div>
+                </div>
+                <div className='project-info'>
+                  <h3>Task Management App</h3>
+                  <p>
+                    A collaborative task management application with real-time
+                    updates, team collaboration features, and intuitive
+                    drag-and-drop interface.
+                  </p>
+                  <div className='project-tech'>
+                    <span>React</span>
+                    <span>Firebase</span>
+                    <span>Material-UI</span>
+                    <span>Redux</span>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
