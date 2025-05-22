@@ -51,7 +51,7 @@ function App() {
         <section id='about' className='section'>
           <div className='container'>
             <h1>Reemaz Al-Soufe</h1>
-            <h2>Frontend Developer | CS50 Graduate</h2>
+            <h2>Frontend Developer | CS50 Graduate | React Specialist</h2>
             <p className='location'>Dubai, United Arab Emirates</p>
             <div className='summary'>
               <p>
